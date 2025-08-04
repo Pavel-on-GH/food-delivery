@@ -1,0 +1,85 @@
+.navbar {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--main-color);
+  font-family: 'Jost', sans-serif;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
+.navbar__menu-list {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  list-style: none;
+  font-size: 18px;
+}
+
+.navbar__menu-item {
+  cursor: pointer;
+}
+
+.navbar__menu-item_active {
+  border-bottom: 2px solid var(--main-color);
+}
+
+.navbar__controls {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.basket {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.basket__img {
+  width: 36px;
+  height: 36px;
+  transition: tranform 3s ease;
+}
+
+.basket__img:hover {
+  transform: scale(1.2);
+}
+
+.basket__indicator {
+  position: absolute;
+  min-width: 12px;
+  min-height: 12px;
+  background-color: var(--warning-color);
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.navbar__button {
+  font-weight: 700;
+  border: 1px solid var(--main-color);
+  border-radius: 20px;
+  padding: 10px 30px;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  box-shadow: 1px 3px 6px var(--shadow-color);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.navbar__button:hover {
+  box-shadow: 1px 4px 8px var(--shadow-color);
+}
+
+.navbar__button:active {
+  box-shadow: 1px 1.5px 3px var(--shadow-color);
+  transform: translateY(2px);
+}
