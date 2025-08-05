@@ -1,6 +1,5 @@
 import styles from './Navbar.module.css';
-// import { logo, basket } from '../assets/images/index';
-import { basket, logo } from '../assets/images/index';
+import { basket, logo } from '../../assets/images/index';
 import { useState } from 'react';
 
 export const Navbar = () => {

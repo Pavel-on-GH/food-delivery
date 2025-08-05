@@ -45,7 +45,7 @@
 .basket__img {
   width: 36px;
   height: 36px;
-  transition: tranform 3s ease;
+  transition: transform 0.5s ease;
 }
 
 .basket__img:hover {
