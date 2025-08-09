@@ -17,7 +17,7 @@ export const categories_list: FoodCategory[] = [
   { title: 'Супы', image: soups },
   { title: 'Салаты', image: salads },
   { title: 'Закуски', image: snacks },
-  { title: 'Суши', image: sushi },
+  { title: 'Суши и роллы', image: sushi },
   { title: 'Напитки', image: drinks },
-  { title: 'Десерты: ', image: desserts },
+  { title: 'Десерты', image: desserts },
 ];

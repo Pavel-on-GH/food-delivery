@@ -1,16 +1,19 @@
 import styles from './FoodCategories.module.css';
 import { categories_list } from '../../assets/images';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setActiveCategory } from '../../store/slices/categorySlice';
 
 export const FoodCategories = () => {
-  const [activeCategory, setActiveCategory] = useState(categories_list[0].title);
+  const activeCategory = useAppSelector((state) => state.categoryReducer.activeCategory);
+  const dispatch = useAppDispatch();
 
-  // Функция выбора активной категории
-  function changeActiveCategory(title: string) {
-    return `${styles['categories__item-img']} ${
+  const changeActiveCategory = (title: string) =>
+    `${styles['categories__item-img']} ${
       activeCategory === title ? styles['categories__item-img_active'] : ''
     }`;
-  }
+
+  const onCategoryClick = (title: string) =>
+    dispatch(setActiveCategory(activeCategory === title ? '' : title));
 
   return (
     <div className={styles.categories}>
@@ -21,11 +24,11 @@ export const FoodCategories = () => {
         по-настоящему незабываемым.
       </p>
       <div className={styles['categories__list']}>
-        {categories_list.map((item, index) => (
+        {categories_list.map((item) => (
           <div
-            onClick={() => setActiveCategory(item.title)}
-            className={styles['categories__item']}
-            key={index}>
+            key={item.title}
+            onClick={() => onCategoryClick(item.title)}
+            className={styles['categories__item']}>
             <img
               src={item.image}
               className={changeActiveCategory(item.title)}
