@@ -4,7 +4,6 @@ import snacks from './food-categories/snacks.png';
 import sushi from './food-categories/sushi.png';
 import drinks from './food-categories/coffee.png';
 import desserts from './food-categories/desserts.png';
-import test from './food/food_026.png';
 
 import food_1 from './food/food_001.png';
 import food_2 from './food/food_002.png';
@@ -38,7 +37,7 @@ interface FoodCategory {
   image: string;
 }
 
-interface FoodListItem {
+export interface FoodListItem {
   _id: string;
   title: string;
   image: string;
@@ -57,7 +56,6 @@ export const categories_list: FoodCategory[] = [
   { title: 'Суши и роллы', image: sushi },
   { title: 'Напитки', image: drinks },
   { title: 'Десерты', image: desserts },
-  { title: 'test', image: test },
 ];
 
 export const food_arr: FoodListItem[] = [

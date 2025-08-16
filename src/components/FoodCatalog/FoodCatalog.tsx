@@ -1,19 +1,24 @@
 import { food_arr } from '../../assets/images';
+import { useAppSelector } from '../../store/hooks';
+import { FoodCatalogItem } from '../FoodCatalogItem/FoodCatalogItem';
 import styles from './FoodCatalog.module.css';
 
 export const FoodCatalog = () => {
+  const activeCategory = useAppSelector((state) => state.categoryReducer.activeCategory);
+  console.log(activeCategory);
+
   return (
     <div className={styles['food-catalog']}>
       <div className={styles['food-catalog__block']}>
-        {food_arr.map((item) => {
-          return (
-            <div key={item._id} className={styles['food-catalog__item']}>
-              <img className={styles['food-catalog__image']} src={item.image} alt={item.title} />
-              <h2 className={styles['food-catalog__title']}>{`${item.title}: ${item.price} р.`}</h2>
-              <p>{item.description}</p>
-            </div>
-          );
-        })}
+        {activeCategory === ''
+          ? food_arr.map((item) => {
+              return <FoodCatalogItem key={item._id} {...item} />;
+            })
+          : food_arr
+              .filter((item) => item.category === activeCategory)
+              .map((item) => {
+                return <FoodCatalogItem key={item._id} {...item} />;
+              })}
       </div>
     </div>
   );

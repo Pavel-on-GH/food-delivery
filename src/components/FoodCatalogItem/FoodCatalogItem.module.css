@@ -1,0 +1,24 @@
+.food-catalog__item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2vh;
+  border: 2px solid var(--main-color);
+  border-radius: 10px;
+  align-items: center;
+  cursor: pointer;
+  /* width: 18vw; */
+}
+
+.food-catalog__title {
+  font-size: 20px;
+  text-align: center;
+}
+
+.food-catalog__image {
+  max-height: 160px;
+}
+
+.food-catalog__description {
+  text-align: justify;
+}
