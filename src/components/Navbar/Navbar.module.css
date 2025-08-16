@@ -83,3 +83,26 @@
   box-shadow: 1px 1.5px 3px var(--shadow-color);
   transform: translateY(2px);
 }
+
+@media (max-width: 640px) {
+  .navbar__menu-list {
+    flex-direction: column;
+    gap: 1vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .navbar__controls {
+    margin-top: 10px;
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .basket__indicator {
+    right: 35px;
+  }
+}

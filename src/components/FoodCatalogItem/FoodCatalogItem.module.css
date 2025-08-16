@@ -5,9 +5,14 @@
   padding: 2vh;
   border: 2px solid var(--main-color);
   border-radius: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
   align-items: center;
   cursor: pointer;
-  /* width: 18vw; */
+  transition: all 0.3s ease;
+}
+
+.food-catalog__item:hover {
+  transform: scale(1.05);
 }
 
 .food-catalog__title {
@@ -16,7 +21,8 @@
 }
 
 .food-catalog__image {
-  max-height: 160px;
+  max-width: 80%;
+  padding: 2vh;
 }
 
 .food-catalog__description {

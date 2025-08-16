@@ -26,7 +26,42 @@
 }
 
 .header__text {
-  font-size: 1.2vw;
+  font-size: 1.5vw;
   font-family: 'Roboto Condensed', sans-serif;
-  margin-bottom: 50px;
+  margin-bottom: 3vh;
+}
+
+@media (max-width: 768px) {
+  .header__title {
+    line-height: 1.2;
+    margin-bottom: 0;
+  }
+
+  .header__text {
+    font-size: 1.8vw;
+  }
+}
+@media (max-width: 640px) {
+  .header__container {
+    max-width: 60%;
+  }
+
+  .header__title {
+    font-size: max(2vw, 18px);
+  }
+
+  .header__text {
+    margin-bottom: 1vh;
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__title {
+    font-size: max(2vw, 16px);
+  }
+
+  .header__text {
+    font-size: 2.7vw;
+  }
 }
