@@ -1,13 +1,16 @@
 import styles from './Navbar.module.css';
 import { basket, logo } from '../../assets/images/index';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const [active, setActive] = useState('main');
 
   return (
     <nav className={styles.navbar}>
-      <img src={logo} alt="Логотип: готовое блюдо" className={styles.logo} />
+      <Link to="/">
+        <img src={logo} alt="Логотип: готовое блюдо" className={styles.logo} />
+      </Link>
 
       <ul className={styles['navbar__menu-list']}>
         <li
@@ -41,10 +44,13 @@ export const Navbar = () => {
         </li>
       </ul>
       <div className={styles.navbar__controls}>
-        <button className={styles.basket}>
-          <img className={styles.basket__img} src={basket} alt="Корзина" />
-          <div className={styles.basket__indicator}></div>
-        </button>
+        <Link to="/basket">
+          <button className={styles.basket}>
+            <img className={styles.basket__img} src={basket} alt="Корзина" />
+            <div className={styles.basket__indicator}></div>
+          </button>
+        </Link>
+
         <button className={styles.navbar__button}>Войти</button>
       </div>
     </nav>
