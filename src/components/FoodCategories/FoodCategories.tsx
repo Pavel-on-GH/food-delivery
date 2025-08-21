@@ -18,11 +18,16 @@ export const FoodCategories = () => {
   return (
     <div className={styles.categories}>
       <h1 className={styles['categories__title']}>Меню</h1>
-      <p className={styles['categories__description']}>
-        Из множества вкусных блюд нашего разнообразного меню найдётся что-то по душе каждому. Наша
-        задача - подарить вам удовольствие от каждого укуса и сделать ваш обед или ужин
-        по-настоящему незабываемым.
-      </p>
+      <div className={styles['categories__text']}>
+        <p className={styles['categories__description']}>
+          Из множества вкусных блюд нашего разнообразного меню найдётся что-то по душе каждому.
+        </p>
+        <p className={styles['categories__description']}>
+          Наша задача - подарить вам удовольствие от каждого укуса и сделать ваш обед или ужин
+          по-настоящему незабываемым.
+        </p>
+      </div>
+
       <div className={styles['categories__list']}>
         {categories_list.map((item) => (
           <div

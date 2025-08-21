@@ -1,57 +1,33 @@
 import styles from './Navbar.module.css';
 import { basket, logo } from '../../assets/images/index';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Navbar = () => {
-  const [active, setActive] = useState('main');
+type NavbarProps = {
+  setShowLogin: (showLogin: boolean) => void;
+};
 
+export const Navbar = ({ setShowLogin }: NavbarProps) => {
   return (
     <nav className={styles.navbar}>
       <Link to="/">
         <img src={logo} alt="Логотип: готовое блюдо" className={styles.logo} />
       </Link>
 
-      <ul className={styles['navbar__menu-list']}>
-        <li
-          onClick={() => {
-            setActive('main');
-          }}
-          className={`${styles['navbar__menu-item']} ${
-            active === 'main' ? styles['navbar__menu-item_active'] : ''
-          }`}>
-          Главная
-        </li>
-
-        <li
-          onClick={() => {
-            setActive('menu');
-          }}
-          className={`${styles['navbar__menu-item']} ${
-            active === 'menu' ? styles['navbar__menu-item_active'] : ''
-          }`}>
-          Меню
-        </li>
-
-        <li
-          onClick={() => {
-            setActive('contacts');
-          }}
-          className={`${styles['navbar__menu-item']} ${
-            active === 'contacts' ? styles['navbar__menu-item_active'] : ''
-          }`}>
-          Контакты
-        </li>
-      </ul>
       <div className={styles.navbar__controls}>
-        <Link to="/basket">
+        <Link className={styles.basket} to="/basket">
           <button className={styles.basket}>
             <img className={styles.basket__img} src={basket} alt="Корзина" />
             <div className={styles.basket__indicator}></div>
           </button>
         </Link>
 
-        <button className={styles.navbar__button}>Войти</button>
+        <button
+          onClick={() => {
+            setShowLogin(true);
+          }}
+          className={styles.navbar__button}>
+          Войти
+        </button>
       </div>
     </nav>
   );

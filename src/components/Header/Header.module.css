@@ -4,6 +4,7 @@
   margin: 30px auto;
   background: url('../../assets/images/header.png');
   background-size: cover;
+  border-radius: 10px;
   color: var(--white-color);
 }
 

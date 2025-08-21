@@ -36,8 +36,10 @@
 
 :root {
   --main-color: #064e03;
+  --additional-color: #2a7a11;
   --warning-color: #ff0000;
   --shadow-color: rgba(0, 0, 0, 0.4);
+  --input-shadow-color: rgba(42, 122, 17, 0.5);
   --white-color: #fff;
   --dark-gray-color: #2e2e2e;
 }
