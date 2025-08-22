@@ -25,6 +25,7 @@ export const LoginPopup = ({ setShowLogin }: LoginProps) => {
       document.body.style.overflow = '';
     };
   }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };

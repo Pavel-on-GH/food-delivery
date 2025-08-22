@@ -11,10 +11,10 @@ export function App() {
   const [showLogin, setShowLogin] = useState(false);
 
   return (
-    <>
+    <div className={styles.main}>
       {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
 
-      <div className={styles.main}>
+      <div className={styles.container}>
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -22,6 +22,6 @@ export function App() {
         </Routes>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }

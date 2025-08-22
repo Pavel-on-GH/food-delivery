@@ -5,7 +5,6 @@ import styles from './FoodCatalog.module.css';
 
 export const FoodCatalog = () => {
   const activeCategory = useAppSelector((state) => state.categoryReducer.activeCategory);
-  console.log(activeCategory);
 
   return (
     <div className={styles['food-catalog']}>

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styles from './FoodCategories.module.css';
 import { categories_list } from '../../assets/images';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -15,8 +16,19 @@ export const FoodCategories = () => {
   const onCategoryClick = (title: string) =>
     dispatch(setActiveCategory(activeCategory === title ? '' : title));
 
+  useEffect(() => {
+    if (window.location.hash === '#categories') {
+      const element = document.getElementById('categories');
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, []);
+
   return (
-    <div className={styles.categories}>
+    <div className={styles.categories} id="categories">
       <h1 className={styles['categories__title']}>Меню</h1>
       <div className={styles['categories__text']}>
         <p className={styles['categories__description']}>

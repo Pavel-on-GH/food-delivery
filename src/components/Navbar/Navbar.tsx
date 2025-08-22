@@ -1,12 +1,16 @@
 import styles from './Navbar.module.css';
 import { basket, logo } from '../../assets/images/index';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { type RootState } from '../../store/store';
 
 type NavbarProps = {
   setShowLogin: (showLogin: boolean) => void;
 };
 
 export const Navbar = ({ setShowLogin }: NavbarProps) => {
+  const basketItems = useSelector((state: RootState) => state.basketReducer.items);
+
   return (
     <nav className={styles.navbar}>
       <Link to="/">
@@ -17,7 +21,7 @@ export const Navbar = ({ setShowLogin }: NavbarProps) => {
         <Link className={styles.basket} to="/basket">
           <button className={styles.basket}>
             <img className={styles.basket__img} src={basket} alt="Корзина" />
-            <div className={styles.basket__indicator}></div>
+            {basketItems.length !== 0 ? <div className={styles.basket__indicator}></div> : ''}
           </button>
         </Link>
 
