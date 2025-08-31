@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styles from './FoodCategories.module.css';
-import { categories_list } from '../../assets/images';
+import { categories_list } from '../../data/categories';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setActiveCategory } from '../../store/slices/categorySlice';
 

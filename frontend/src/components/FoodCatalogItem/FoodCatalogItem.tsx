@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { incrementItem, decrementItem } from '../../store/slices/basketSlice';
-import type { FoodListItem } from '../../assets/images';
+import type { FoodListItem } from '../FoodCatalogItem/FoodCatalogItem.types';
 import styles from './FoodCatalogItem.module.css';
 import type { RootState } from '../../store/store';
 
@@ -14,7 +14,11 @@ export const FoodCatalogItem = (item: FoodListItem) => {
   return (
     <div className={styles['food-item']}>
       <div className={styles['food-item__display']}>
-        <img className={styles['food-item__image']} src={item.image} alt={item.title} />
+        <img
+          className={styles['food-item__image']}
+          src={`http://localhost:4000/uploads/${item.image}`}
+          alt={item.title}
+        />
         <div className={styles['food-item__count']}>
           {count === 0 ? (
             <button

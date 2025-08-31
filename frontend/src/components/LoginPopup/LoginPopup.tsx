@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './LoginPopup.module.css';
-
-type LoginProps = {
-  setShowLogin: (showLogin: boolean) => void;
-};
-
-type AuthMode = 'login' | 'register';
+import type { LoginProps, AuthMode } from './LoginPopup.types';
 
 export const LoginPopup = ({ setShowLogin }: LoginProps) => {
   const [mode, setMode] = useState<AuthMode>('login');

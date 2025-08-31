@@ -3,10 +3,7 @@ import { basket, logo } from '../../assets/images/index';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../../store/store';
-
-type NavbarProps = {
-  setShowLogin: (showLogin: boolean) => void;
-};
+import type { NavbarProps } from './Navbar.types';
 
 export const Navbar = ({ setShowLogin }: NavbarProps) => {
   const basketItems = useSelector((state: RootState) => state.basketReducer.items);

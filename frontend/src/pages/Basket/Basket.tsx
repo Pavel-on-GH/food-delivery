@@ -40,7 +40,11 @@ export const Basket = () => {
           <ul className={styles['basket__list']}>
             {basketItems.map((item) => (
               <li className={styles['basket__item']} key={item._id}>
-                <img className={styles['basket__img']} src={item.image} alt={item.title} />
+                <img
+                  className={styles['basket__img']}
+                  src={`http://localhost:4000/uploads/${item.image}`}
+                  alt={item.title}
+                />
 
                 <p>{item.title}</p>
 
