@@ -1,9 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import styles from './LoginPopup.module.css';
 import type { LoginProps, AuthMode } from './LoginPopup.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { authUser } from '../../store/slices/authSlice';
+import type { RootState, AppDispatch } from '../../store/store';
 
 export const LoginPopup = ({ setShowLogin }: LoginProps) => {
   const [mode, setMode] = useState<AuthMode>('login');
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const { loading, token, error } = useSelector((state: RootState) => state.authReducer);
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData((data) => ({ ...data, [name]: value }));
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -21,12 +39,19 @@ export const LoginPopup = ({ setShowLogin }: LoginProps) => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    if (token) {
+      setShowLogin(false);
+    }
+  }, [token]);
 
   const closeOnOverlayClick = () => setShowLogin(false);
   const preventClose = (e: React.MouseEvent) => e.stopPropagation();
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(authUser({ mode, data }));
+  };
 
   return (
     <div
@@ -35,7 +60,7 @@ export const LoginPopup = ({ setShowLogin }: LoginProps) => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="login-popup-title">
-      <form className={styles['login-popup__form']} onClick={preventClose} onSubmit={handleSubmit}>
+      <form className={styles['login-popup__form']} onClick={preventClose} onSubmit={onSubmit}>
         <h2 className={styles['login-popup__title']} id="login-popup-title">
           {mode === 'login' ? 'Вход' : 'Регистрация'}
         </h2>
@@ -44,6 +69,9 @@ export const LoginPopup = ({ setShowLogin }: LoginProps) => {
           {mode === 'register' && (
             <input
               className={styles['login-popup__input']}
+              name="name"
+              onChange={onChangeHandler}
+              value={data.name}
               placeholder="Имя"
               type="text"
               required
@@ -51,12 +79,18 @@ export const LoginPopup = ({ setShowLogin }: LoginProps) => {
           )}
           <input
             className={styles['login-popup__input']}
+            name="email"
+            onChange={onChangeHandler}
+            value={data.email}
             placeholder="Почта"
             type="email"
             required
           />
           <input
             className={styles['login-popup__input']}
+            name="password"
+            onChange={onChangeHandler}
+            value={data.password}
             placeholder="Пароль"
             type="password"
             required
@@ -64,11 +98,10 @@ export const LoginPopup = ({ setShowLogin }: LoginProps) => {
           />
         </div>
 
-        <button
-          onClick={() => setShowLogin(false)}
-          className={styles['login-popup__login-btn']}
-          type="submit">
-          {mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
+        {error && <p className={styles['login-popup__error']}>{error}</p>}
+
+        <button className={styles['login-popup__login-btn']} type="submit" disabled={loading}>
+          {loading ? 'Загрузка...' : mode === 'login' ? 'Войти' : 'Зарегистрироваться'}
         </button>
 
         <button

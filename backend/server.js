@@ -2,9 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'dotenv/config';
 
 import { connectDB } from './config/db.js';
-import { foodRouter } from './routes/foodRoutes.js';
+import { foodRouter } from './routes/foodRoute.js';
+import { userRouter } from './routes/userRoute.js';
 
 const app = express();
 const port = 4000;
@@ -18,8 +20,8 @@ app.use(cors());
 connectDB();
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use('/api/food', foodRouter);
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
   res.send('Сервер работает!');
