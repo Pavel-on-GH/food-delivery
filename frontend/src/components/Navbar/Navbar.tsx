@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../../store/store';
 import type { NavbarProps } from './Navbar.types';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../store/slices/authSlice';
 
 export const Navbar = ({ setShowLogin }: NavbarProps) => {
   const basketItems = useSelector((state: RootState) => state.basketReducer.items);
+  const token = useSelector((state: RootState) => state.authReducer.token);
+  const dispatch = useDispatch();
 
   return (
     <nav className={styles.navbar}>
@@ -24,10 +28,11 @@ export const Navbar = ({ setShowLogin }: NavbarProps) => {
 
         <button
           onClick={() => {
-            setShowLogin(true);
+            if (!token) setShowLogin(true);
+            else dispatch(logout());
           }}
           className={styles.navbar__button}>
-          Войти
+          {!token ? 'Войти' : 'Выйти'}
         </button>
       </div>
     </nav>
