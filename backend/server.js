@@ -7,6 +7,7 @@ import 'dotenv/config';
 import { connectDB } from './config/db.js';
 import { foodRouter } from './routes/foodRoute.js';
 import { userRouter } from './routes/userRoute.js';
+import { basketRouter } from './routes/basketRoute.js';
 
 const app = express();
 const port = 4000;
@@ -22,6 +23,7 @@ connectDB();
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/food', foodRouter);
 app.use('/api/user', userRouter);
+app.use('/api/basket', basketRouter);
 
 app.get('/', (req, res) => {
   res.send('Сервер работает!');
