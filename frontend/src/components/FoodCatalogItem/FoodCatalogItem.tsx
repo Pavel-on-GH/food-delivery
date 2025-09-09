@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { incrementItem, decrementItem } from '../../store/slices/basketSlice';
+import { incrementItem, decrementItem, persistGuestBasket } from '../../store/slices/basketSlice';
 import type { FoodListItem } from '../FoodCatalogItem/FoodCatalogItem.types';
 import styles from './FoodCatalogItem.module.css';
 import type { RootState } from '../../store/store';
@@ -8,6 +8,7 @@ import axios from 'axios';
 
 export const FoodCatalogItem = (item: FoodListItem) => {
   const dispatch = useDispatch();
+  const basketItems = useAppSelector((state) => state.basketReducer.items);
   const basketItem = useSelector((state: RootState) =>
     state.basketReducer.items.find((i) => i._id === item._id),
   );
@@ -34,6 +35,20 @@ export const FoodCatalogItem = (item: FoodListItem) => {
           },
         },
       );
+    } else {
+      persistGuestBasket(
+        [
+          ...basketItems.filter((i) => i._id !== item._id),
+          {
+            _id: item._id,
+            title: item.title,
+            price: item.price,
+            image: item.image,
+            count: count + 1,
+          },
+        ],
+        '',
+      );
     }
   };
 
@@ -50,6 +65,18 @@ export const FoodCatalogItem = (item: FoodListItem) => {
           },
         },
       );
+    } else {
+      if (count - 1 > 0) {
+        persistGuestBasket(
+          basketItems.map((i) => (i._id === item._id ? { ...i, count: i.count - 1 } : i)),
+          '',
+        );
+      } else {
+        persistGuestBasket(
+          basketItems.filter((i) => i._id !== item._id),
+          '',
+        );
+      }
     }
   };
 

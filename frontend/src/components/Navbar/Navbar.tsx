@@ -1,11 +1,11 @@
 import styles from './Navbar.module.css';
 import { basket, logo } from '../../assets/images/index';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { type RootState } from '../../store/store';
 import type { NavbarProps } from './Navbar.types';
-import { useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
+import { clearBasket } from '../../store/slices/basketSlice';
 
 export const Navbar = ({ setShowLogin }: NavbarProps) => {
   const basketItems = useSelector((state: RootState) => state.basketReducer.items);
@@ -28,8 +28,12 @@ export const Navbar = ({ setShowLogin }: NavbarProps) => {
 
         <button
           onClick={() => {
-            if (!token) setShowLogin(true);
-            else dispatch(logout());
+            if (!token) {
+              setShowLogin(true);
+            } else {
+              dispatch(logout());
+              dispatch(clearBasket());
+            }
           }}
           className={styles.navbar__button}>
           {!token ? 'Войти' : 'Выйти'}

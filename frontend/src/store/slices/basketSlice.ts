@@ -17,36 +17,34 @@ const initialState: BasketState = {
   items: [],
 };
 
-export const loadUserBasket = createAsyncThunk<BasketItem[], string, { rejectValue: string }>(
+export const loadUserBasket = createAsyncThunk<BasketItem[], string>(
   'basket/loadUserBasket',
-  async (token, { rejectWithValue }) => {
-    try {
-      const basketRes = await axios.post(
-        'http://localhost:4000/api/basket/get',
-        {},
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+  async (token) => {
+    const basketRes = await axios.post(
+      'http://localhost:4000/api/basket/get',
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
-      const basketData = basketRes.data.basketData;
-      const foodRes = await axios.get('http://localhost:4000/api/food/food-arr');
-      const foodArr = foodRes.data.data;
+    const basketData = basketRes.data.basketData;
 
-      const fullBasket: BasketItem[] = Object.entries(basketData).map(([id, count]) => {
-        const product = foodArr.find((p: any) => p._id === id);
-        return {
-          _id: id,
-          title: product?.title || '',
-          price: product?.price || 0,
-          image: product?.image || '',
-          count: Number(count),
-        };
-      });
+    const foodRes = await axios.get('http://localhost:4000/api/food/food-arr');
+    const foodArr = foodRes.data.data;
 
-      return fullBasket;
-    } catch (err) {
-      console.error('Ошибка загрузки корзины авторизованного пользователя', err);
-      return rejectWithValue('Failed to load user basket');
-    }
+    return Object.entries(basketData).map(([id, count]) => {
+      const product = foodArr.find((p: any) => p._id === id);
+      return {
+        _id: id,
+        title: product?.title || '',
+        price: product?.price || 0,
+        image: product?.image || '',
+        count: Number(count),
+      };
+    });
   },
 );
 
@@ -57,6 +55,17 @@ export const loadGuestBasketFromStorage = createAsyncThunk<BasketItem[]>(
     return stored ? JSON.parse(stored) : [];
   },
 );
+
+const saveGuestBasketToStorage = (items: BasketItem[]) => {
+  const raw = localStorage.getItem('guestBasket');
+  const parsed = raw ? JSON.parse(raw) : [];
+
+  const isSame = JSON.stringify(parsed) === JSON.stringify(items);
+
+  if (!isSame) {
+    localStorage.setItem('guestBasket', JSON.stringify(items));
+  }
+};
 
 const basketSlice = createSlice({
   name: 'basket',
@@ -69,6 +78,7 @@ const basketSlice = createSlice({
       } else {
         state.items.push({ ...action.payload, count: 1 });
       }
+      saveGuestBasketToStorage(state.items);
     },
     decrementItem(state, action: PayloadAction<string>) {
       const item = state.items.find((item) => item._id === action.payload);
@@ -78,12 +88,15 @@ const basketSlice = createSlice({
           state.items = state.items.filter((i) => i._id !== action.payload);
         }
       }
+      saveGuestBasketToStorage(state.items);
     },
     removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item._id !== action.payload);
+      saveGuestBasketToStorage(state.items);
     },
     clearBasket(state) {
       state.items = [];
+      localStorage.removeItem('guestBasket');
     },
     setBasket(state, action: PayloadAction<BasketItem[]>) {
       state.items = action.payload;
@@ -102,5 +115,11 @@ const basketSlice = createSlice({
 
 export const { incrementItem, decrementItem, removeItem, clearBasket, setBasket } =
   basketSlice.actions;
+
+export const persistGuestBasket = (items: BasketItem[], token: string) => {
+  if (!token) {
+    saveGuestBasketToStorage(items);
+  }
+};
 
 export default basketSlice.reducer;
