@@ -1,22 +1,44 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
 import type { FoodListItem } from '../components/FoodCatalogItem/FoodCatalogItem.types';
+import type { BasketItem } from '../store/slices/basketSlice';
+import { clearBasket } from '../store/slices/basketSlice';
 
-interface BasketItem extends FoodListItem {
-  count: number;
+interface UseLoadBasketOptions {
+  mergeGuestToServer?: boolean;
 }
 
-export const useLoadBasket = () => {
+export const useLoadBasket = ({ mergeGuestToServer = false }: UseLoadBasketOptions = {}) => {
   const token = useAppSelector((state) => state.authReducer.token);
+  const guestItems = useAppSelector((state) => state.basketReducer.items);
+  const dispatch = useAppDispatch();
+
   const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchBasket = useCallback(async () => {
-    if (!token) return;
+    setLoading(true);
+
+    if (!token) {
+      setBasketItems(guestItems);
+      setLoading(false);
+      return;
+    }
 
     try {
-      setLoading(true);
+      if (mergeGuestToServer && guestItems.length > 0) {
+        for (const item of guestItems) {
+          for (let i = 0; i < item.count; i++) {
+            await axios.post(
+              'http://localhost:4000/api/basket/add',
+              { itemId: item._id },
+              { headers: { Authorization: `Bearer ${token}` } },
+            );
+          }
+        }
+        dispatch(clearBasket());
+      }
 
       const basketRes = await axios.post(
         'http://localhost:4000/api/basket/get',
@@ -48,10 +70,11 @@ export const useLoadBasket = () => {
       setBasketItems(fullBasket);
     } catch (err) {
       console.error('Ошибка при загрузке корзины', err);
+      setBasketItems([]);
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [token, guestItems, mergeGuestToServer, dispatch]);
 
   useEffect(() => {
     fetchBasket();

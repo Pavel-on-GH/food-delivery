@@ -22,12 +22,35 @@ export const authUser = createAsyncThunk<
     const url = `http://localhost:4000/api/user/${mode}`;
     const res = await axios.post(url, data);
 
-    if (res.data.success) {
-      localStorage.setItem('token', res.data.token);
-      return res.data.token;
-    } else {
+    if (!res.data.success) {
       return rejectWithValue(res.data.message || 'Unknown error');
     }
+
+    const token = res.data.token;
+    localStorage.setItem('token', token);
+
+    const guestBasket = localStorage.getItem('guest_basket');
+    if (guestBasket) {
+      const parsedBasket = JSON.parse(guestBasket) as { _id: string; count: number }[];
+
+      for (const item of parsedBasket) {
+        for (let i = 0; i < item.count; i++) {
+          await axios.post(
+            'http://localhost:4000/api/basket/add',
+            { itemId: item._id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        }
+      }
+
+      localStorage.removeItem('guest_basket');
+    }
+
+    return token;
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || 'Server error');
   }

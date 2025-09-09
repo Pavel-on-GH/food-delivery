@@ -9,6 +9,7 @@ import { LoginPopup } from './components/LoginPopup/LoginPopup';
 import { useDispatch } from 'react-redux';
 import { setTokenFromStorage } from './store/slices/authSlice';
 import type { AppDispatch } from './store/store';
+import { loadGuestBasketFromStorage, loadUserBasket } from './store/slices/basketSlice';
 
 export function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -16,8 +17,12 @@ export function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+
     if (token) {
       dispatch(setTokenFromStorage(token));
+      dispatch(loadUserBasket(token));
+    } else {
+      dispatch(loadGuestBasketFromStorage());
     }
   }, [dispatch]);
 
