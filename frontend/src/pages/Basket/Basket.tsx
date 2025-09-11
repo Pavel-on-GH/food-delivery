@@ -4,8 +4,9 @@ import { useAppSelector } from '../../store/hooks';
 import { useBasketActions } from '../../hooks/useBasketActions';
 import { Link } from 'react-router-dom';
 import { empty_basket } from '../../assets/images/index';
+import type { BasketProps } from './Basket.types';
 
-export const Basket = () => {
+export const Basket = ({ setShowSuccessPopup }: BasketProps) => {
   const basketItems = useAppSelector((state) => state.basketReducer.items);
   const token = useAppSelector((state) => state.authReducer.token);
   const { addToBasket, removeFromBasket, deleteFromBasket, clearUserBasket } = useBasketActions();
@@ -13,6 +14,15 @@ export const Basket = () => {
   const total = basketItems.reduce((sum, item) => sum + item.price * item.count, 0);
 
   useEffect(() => {}, [token]);
+
+  const handleOrderClick = () => {
+    if (token) {
+      clearUserBasket();
+      setShowSuccessPopup(true);
+    } else {
+      setShowSuccessPopup(true);
+    }
+  };
 
   if (basketItems.length === 0)
     return (
@@ -93,7 +103,7 @@ export const Basket = () => {
 
         <div className={styles['basket__order-block']}>
           <h3>Итого: {total} р.</h3>
-          <button type="button" className={styles['basket__btn']}>
+          <button type="button" className={styles['basket__btn']} onClick={handleOrderClick}>
             Сделать заказ
           </button>
         </div>

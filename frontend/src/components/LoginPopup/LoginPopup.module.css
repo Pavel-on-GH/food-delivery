@@ -92,8 +92,9 @@ body.modal-open {
   cursor: pointer;
   font-size: 16px;
   background-color: inherit;
+  color: var(--warning-color);
 }
 
 .login-popup__switch-btn:hover {
-  color: var(--warning-color);
+  text-decoration: underline;
 }

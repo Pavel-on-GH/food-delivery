@@ -6,15 +6,15 @@ import { Basket } from './pages/Basket/Basket';
 import { Footer } from './components/Footer/Footer';
 import { useEffect, useState } from 'react';
 import { LoginPopup } from './components/LoginPopup/LoginPopup';
-import { useAppDispatch, useAppSelector } from './store/hooks';
+import { useAppDispatch } from './store/hooks';
 import { setTokenFromStorage } from './store/slices/authSlice';
 import { loadUserBasket, loadGuestBasketFromStorage } from './store/slices/basketSlice';
-import axios from 'axios';
+import { OrderSuccessPopup } from './components/OrderSuccessPopup/OrderSuccessPopup';
 
 export function App() {
   const [showLogin, setShowLogin] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.authReducer.token);
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('token');
@@ -27,47 +27,15 @@ export function App() {
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    const mergeGuestBasket = async () => {
-      const guestBasketRaw = localStorage.getItem('guestBasket');
-
-      if (token && guestBasketRaw) {
-        try {
-          const guestItems = JSON.parse(guestBasketRaw);
-
-          for (const item of guestItems) {
-            for (let i = 0; i < item.count; i++) {
-              await axios.post(
-                'http://localhost:4000/api/basket/add',
-                { itemId: item._id },
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                },
-              );
-            }
-          }
-
-          localStorage.removeItem('guestBasket');
-          dispatch(loadUserBasket(token));
-        } catch (err) {
-          console.error('Ошибка при слиянии корзин:', err);
-        }
-      }
-    };
-
-    mergeGuestBasket();
-  }, [token, dispatch]);
-
   return (
     <div className={styles.main}>
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      {showSuccessPopup && <OrderSuccessPopup setShowSuccess={setShowSuccessPopup} />}
       <div className={styles.container}>
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/basket" element={<Basket />} />
+          <Route path="/basket" element={<Basket setShowSuccessPopup={setShowSuccessPopup} />} />
         </Routes>
       </div>
       <Footer />

@@ -15,7 +15,6 @@ export const FoodCatalog = () => {
       try {
         const res = await axios.get('http://localhost:4000/api/food/food-arr');
         setFoodArr(res.data.data);
-        console.log(res.data.data);
       } catch (error) {
         console.error('Ошибка при загрузке данных:', error);
       }
