@@ -15,13 +15,29 @@ FoodDelivery - это веб-приложение для доставки еды
 
 ### Стек (MERN)
 
-- React;
-- Redux Toolkit;
-- TypeScript;
-- CSS Modules;
-- Node.js;
-- Express;
-- MongoDB.
+- **Frontend**: React, Redux Toolkit, TypeScript, CSS Modules;
+- **Backend**: Node.js, Express;
+- **База данных**: MongoDB.
+
+---
+
+### Демонстрация интерфейса
+
+#### Главная страница
+Навигационная панель и баннер — первое, что видит пользователь при входе:
+![Главная страница](./frontend/src/assets/images/screenshots/screen_1.png)
+
+#### Каталог товаров
+Карточки блюд с возможностью фильтрации по категориям:
+![Каталог товаров](./frontend/src/assets/images/screenshots/screen_2.png)
+
+#### Регистрация
+Форма регистрации с валидацией:
+![Регистрация](./frontend/src/assets/images/screenshots/screen_3.png)
+
+#### Корзина
+Корзина с добавленными товарами и возможностью оформить заказ:  
+![Корзина](./frontend/src/assets/images/screenshots/screen_4.png)
 
 ### Запуск
 
