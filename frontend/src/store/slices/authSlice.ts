@@ -19,7 +19,7 @@ export const authUser = createAsyncThunk<
   { rejectValue: string }
 >('auth/authUser', async ({ mode, data }, { rejectWithValue }) => {
   try {
-    const url = `http://localhost:4000/api/user/${mode}`;
+    const url = `${import.meta.env.VITE_BACKEND_URL}/api/user/${mode}`;
     const res = await axios.post(url, data);
 
     if (res.data.success) {

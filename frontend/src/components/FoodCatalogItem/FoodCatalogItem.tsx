@@ -27,7 +27,7 @@ export const FoodCatalogItem = (item: FoodListItem) => {
 
     if (token) {
       await axios.post(
-        `http://localhost:4000/api/basket/add`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/basket/add`,
         { itemId: item._id },
         {
           headers: {
@@ -57,7 +57,7 @@ export const FoodCatalogItem = (item: FoodListItem) => {
 
     if (token) {
       await axios.post(
-        `http://localhost:4000/api/basket/remove`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/basket/remove`,
         { itemId: item._id },
         {
           headers: {
@@ -85,7 +85,7 @@ export const FoodCatalogItem = (item: FoodListItem) => {
       <div className={styles['food-item__display']}>
         <img
           className={styles['food-item__image']}
-          src={`http://localhost:4000/uploads/${item.image}`}
+          src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${item.image}`}
           alt={item.title}
         />
         <div className={styles['food-item__count']}>

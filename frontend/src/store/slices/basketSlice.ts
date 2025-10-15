@@ -21,7 +21,7 @@ export const loadUserBasket = createAsyncThunk<BasketItem[], string>(
   'basket/loadUserBasket',
   async (token) => {
     const basketRes = await axios.post(
-      'http://localhost:4000/api/basket/get',
+      `${import.meta.env.VITE_BACKEND_URL}/api/basket/get`,
       {},
       {
         headers: {
@@ -32,7 +32,7 @@ export const loadUserBasket = createAsyncThunk<BasketItem[], string>(
 
     const basketData = basketRes.data.basketData;
 
-    const foodRes = await axios.get('http://localhost:4000/api/food/food-arr');
+    const foodRes = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/food/food-arr`);
     const foodArr = foodRes.data.data;
 
     return Object.entries(basketData).map(([id, count]) => {

@@ -10,13 +10,18 @@ import { userRouter } from './routes/userRoute.js';
 import { basketRouter } from './routes/basketRoute.js';
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const corsOptions = {
+  origin: process.env.VITE_FRONTEND_URL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 connectDB();
 

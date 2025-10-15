@@ -31,7 +31,7 @@ export const useLoadBasket = ({ mergeGuestToServer = false }: UseLoadBasketOptio
         for (const item of guestItems) {
           for (let i = 0; i < item.count; i++) {
             await axios.post(
-              'http://localhost:4000/api/basket/add',
+              `${import.meta.env.VITE_BACKEND_URL}/api/basket/add`,
               { itemId: item._id },
               { headers: { Authorization: `Bearer ${token}` } },
             );
@@ -41,7 +41,7 @@ export const useLoadBasket = ({ mergeGuestToServer = false }: UseLoadBasketOptio
       }
 
       const basketRes = await axios.post(
-        'http://localhost:4000/api/basket/get',
+        `${import.meta.env.VITE_BACKEND_URL}/api/basket/get`,
         {},
         {
           headers: {
@@ -52,7 +52,7 @@ export const useLoadBasket = ({ mergeGuestToServer = false }: UseLoadBasketOptio
 
       const basketData = basketRes.data.basketData;
 
-      const foodRes = await axios.get('http://localhost:4000/api/food/food-arr');
+      const foodRes = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/food/food-arr`);
       const foodArr: FoodListItem[] = foodRes.data.data;
 
       const fullBasket = Object.entries(basketData)

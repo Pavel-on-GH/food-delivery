@@ -17,7 +17,7 @@ export const useBasketActions = () => {
     if (token) {
       try {
         await axios.post(
-          'http://localhost:4000/api/basket/add',
+          `${import.meta.env.VITE_BACKEND_URL}/api/basket/add`,
           { itemId: item._id },
           {
             headers: {
@@ -37,7 +37,7 @@ export const useBasketActions = () => {
     if (token) {
       try {
         await axios.post(
-          'http://localhost:4000/api/basket/remove',
+          `${import.meta.env.VITE_BACKEND_URL}/api/basket/remove`,
           { itemId },
           {
             headers: {
@@ -57,7 +57,7 @@ export const useBasketActions = () => {
     if (token) {
       try {
         await axios.post(
-          'http://localhost:4000/api/basket/delete',
+          `${import.meta.env.VITE_BACKEND_URL}/api/basket/delete`,
           { itemId },
           {
             headers: {
@@ -77,7 +77,7 @@ export const useBasketActions = () => {
     if (token) {
       try {
         await axios.post(
-          'http://localhost:4000/api/basket/clear',
+          `${import.meta.env.VITE_BACKEND_URL}/api/basket/clear`,
           {},
           {
             headers: {

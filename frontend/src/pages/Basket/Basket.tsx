@@ -50,7 +50,7 @@ export const Basket = ({ setShowSuccessPopup }: BasketProps) => {
               <li className={styles['basket__item']} key={item._id}>
                 <img
                   className={styles['basket__img']}
-                  src={`http://localhost:4000/uploads/${item.image}`}
+                  src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${item.image}`}
                   alt={item.title}
                 />
 
