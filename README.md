@@ -1,6 +1,6 @@
-# FoodDelivery
+## FoodDelivery
 
-## Описание
+### Описание
 
 FoodDelivery - это веб-приложение для доставки еды.  
 Пользовательская часть написана на React с применением Redux Toolkit в качестве стейт менеджера.  
@@ -13,65 +13,47 @@ FoodDelivery - это веб-приложение для доставки еды
 - Страницу корзины товаров с возможностью редактирования (добавление / удаление товаров);
 - Регистрацию и авторизацию пользователя.
 
----
+### Стек (MERN)
 
-## Стек (MERN)
+- React;
+- Redux Toolkit;
+- TypeScript;
+- CSS Modules;
+- Node.js;
+- Express;
+- MongoDB.
 
-- **Frontend**: React, Redux Toolkit, TypeScript, CSS Modules;
-- **Backend**: Node.js, Express;
-- **База данных**: MongoDB.
+### Деплой
 
----
+Проект работает по адресу:
 
-## Демонстрация интерфейса
+- Frontend: https://food-delivery-eta-eight.vercel.app/
+- Backend: https://food-delivery-backend-r54n.onrender.com/
 
-### Главная страница
-Навигационная панель и баннер — первое, что видит пользователь при входе:
- 
-![Главная страница](./frontend/src/assets/images/screenshots/screen_1.png)
- 
-### Каталог товаров
-Карточки блюд с возможностью фильтрации по категориям:
- 
-![Каталог товаров](./frontend/src/assets/images/screenshots/screen_2.png)
- 
-### Регистрация
-Форма регистрации с валидацией:
- 
-![Регистрация](./frontend/src/assets/images/screenshots/screen_3.png)
-
-### Корзина
-Корзина с добавленными товарами и возможностью оформить заказ:  
- 
-![Корзина](./frontend/src/assets/images/screenshots/screen_4.png)
- 
-
----
-
-## Запуск
+### Запуск
 
 1. Клонируйте репозиторий и перейдите в папку проекта:
 
 ```bash
 git clone https://github.com/Pavel-on-GH/food-delivery.git
-cd your-mern-project
-Запустите backend:
+cd food-delivery
 ```
 
 2. Настройте переменные окружения:
 
-Приложение использует файл `.env`, которого нет в репозитории. Вместо него предоставляется шаблон `.env.example`.
-Скопируйте файл-шаблон:
+В проекте используются два файла .env — для backend и frontend. Их нет в репозитории, вместо них представлены шаблоны .env.example.
+
+Скопируйте шаблоны:
 
 ```bash
-cp .env.example .env
+cp backend/.env.example backend/.env && cp frontend/.env.example frontend/.env
 ```
 
-Откройте .env и заполните свои значения:
+Отредактируйте backend/.env, указав свои значения:
 
 ```bash
-MONGO_URI=<ввести‑свой‑MONGO_URI>
-JWT_SECRET=<ввести‑свой‑JWT_SECRET>
+MONGO_URI=<введите-свой-MONGO_URI>
+JWT_SECRET=<введите-свой-JWT_SECRET>
 ```
 
 3. Запустите backend
